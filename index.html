@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MovieHub - Latest HD Movies</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">🎬 MovieHub</div>
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search movies..." class="search-bar">
+      <div id="searchResults" class="search-results"></div>
+    </div>
+  </header>
+
+  <main class="movie-grid">
+    <!-- Dragon (2025) Card -->
+    <div class="movie-card">
+      <a href="movies/dragon.html">
+        <img src="images/thumbnails/dragon.jpg" alt="Dragon (2025)">
+        <div class="movie-info">
+          <h2>Dragon (2025)</h2>
+          <div class="meta-info">
+            <span>Action/Sci-Fi</span>
+            <span>2h 18m</span>
+          </div>
+          <div class="quality-tags">
+            <span>4K</span>
+            <span>HD</span>
+            <span>1080p</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Vaathi (2023) Card -->
+    <div class="movie-card">
+      <a href="movies/vaathi.html">
+        <img src="images/thumbnails/vaathi.jpg" alt="Vaathi">
+        <div class="movie-info">
+          <h2>Vaathi (2023)</h2>
+          <div class="meta-info">
+            <span>Drama/Action</span>
+            <span>2h 25m</span>
+          </div>
+          <div class="quality-tags">
+            <span>HD</span>
+            <span>1080p</span>
+            <span>Dual Audio</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Mission Majnu (2023) Card -->
+<div class="movie-card">
+    <a href="movies/mission-majnu.html">
+      <img src="images/thumbnails/mission-majnu.jpg" alt="Mission Majnu (2023)">
+      <div class="movie-info">
+        <h2>Mission Majnu (2023)</h2>
+        <div class="meta-info">
+          <span>Action/Thriller</span>
+          <span>2h 9m</span>
+        </div>
+        <div class="quality-tags">
+          <span>4K</span>
+          <span>HD</span>
+          <span>Dual Audio</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  
+  </main>
+
+  <footer style="text-align: center; padding: 20px; color: #aaa; font-size: 14px;">
+    Copyright © 2025 MOVIE4U | Built using Astra WordPress Theme 
+  </footer>
+
+  <script>
+    // Movie Data (Ensure image paths are correct)
+    const movies = [
+      {
+        title: "Dragon (2025)",
+        year: "2025",
+        genre: "Action/Sci-Fi",
+        thumbnail: "images/thumbnails/dragon.jpg",
+        page: "movies/dragon.html"
+      },
+      {
+        title: "Vaathi (2023)",
+        year: "2023",
+        genre: "Drama/Action",
+        thumbnail: "images/thumbnails/vaathi.jpg",
+        page: "movies/vaathi.html"
+      }
+    ];
+
+    // DOM Elements
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    // Enhanced Search Function
+    function handleSearch(query) {
+      const cleanQuery = query.toLowerCase().trim();
+      if (!cleanQuery) {
+        searchResults.style.display = 'none';
+        return;
+      }
+
+      const results = movies.filter(movie => 
+        movie.title.toLowerCase().includes(cleanQuery) ||
+        movie.genre.toLowerCase().includes(cleanQuery)
+      );
+
+      searchResults.innerHTML = results.length ? 
+        results.map(movie => `
+          <div class="search-result-item" data-page="${movie.page}">
+            <img src="${movie.thumbnail}" alt="${movie.title}" 
+                 onerror="this.src='fallback.jpg'">
+            <div>
+              <h4>${movie.title}</h4>
+              <p>${movie.year} • ${movie.genre}</p>
+            </div>
+          </div>
+        `).join('') : 
+        '<div class="no-results">No movies found</div>';
+
+      searchResults.style.display = 'block';
+    }
+
+    // Event Listeners
+    searchInput.addEventListener('input', (e) => handleSearch(e.target.value));
+    
+    searchResults.addEventListener('click', (e) => {
+      const item = e.target.closest('.search-result-item');
+      if (item) window.location.href = item.dataset.page;
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.search-container')) {
+        searchResults.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
